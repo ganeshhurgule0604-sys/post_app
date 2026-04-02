@@ -28,7 +28,7 @@ export class UserRepository {
   async findOneByName(name: string, id?: number) {
     const query = this.userRepository
       .createQueryBuilder('users')
-      .where('user.name ILike :name', { name });
+      .where('users.name ILike :name', { name });
 
     if (id) {
       query.andWhere('users.id!= :id', { id });

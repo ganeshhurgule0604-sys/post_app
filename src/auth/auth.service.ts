@@ -17,7 +17,7 @@ export class AuthService {
       throw new NotFoundException('User Not Found');
     }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-    const isMatch = bcrypt.campare(dto.password, user?.password);
+    const isMatch = bcrypt.compare(dto.password, user?.password);
     if (isMatch) {
       const payload = {
         id: user.id,
