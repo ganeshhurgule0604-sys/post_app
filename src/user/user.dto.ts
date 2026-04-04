@@ -1,11 +1,14 @@
-import { IsOptional } from 'class-validator';
+import { IsNotEmpty, IsOptional } from 'class-validator';
 import { PaginationDto, ResponseDto } from 'src/common/dto';
 
 export class CreateUserRequestDto {
+  @IsNotEmpty()
   name: string;
 
+  @IsOptional()
   email: string;
 
+  @IsNotEmpty()
   password: string;
 }
 
