@@ -84,6 +84,11 @@ export class UserService {
   }
 
   mapUserToDto(user: User | null) {
-    return { id: user?.id, name: user?.name, email: user?.email };
+    return {
+      id: user?.id,
+      name: user?.name,
+      email: user?.email,
+      imageUrl: user?.imageUrl,
+    };
   }
 }

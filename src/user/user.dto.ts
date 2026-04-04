@@ -3,13 +3,16 @@ import { PaginationDto, ResponseDto } from 'src/common/dto';
 
 export class CreateUserRequestDto {
   @IsNotEmpty()
-  name: string;
+  name!: string;
 
   @IsOptional()
-  email: string;
+  email!: string;
 
   @IsNotEmpty()
-  password: string;
+  password!: string;
+
+  @IsOptional()
+  imageUrl?: string;
 }
 
 export class UserDto {
@@ -21,12 +24,15 @@ export class UserDto {
 
   @IsOptional()
   name?: string;
+
+  @IsOptional()
+  iamgeUrl?: string;
 }
 
 export class UserListRequestDto extends PaginationDto {
-  name: string;
+  name!: string;
 
-  email: string;
+  email!: string;
 }
 
 export class updateUserDto extends CreateUserRequestDto {}

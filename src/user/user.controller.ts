@@ -6,11 +6,15 @@ import {
   Post,
   Put,
   Query,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserRequestDto, UserListRequestDto } from './user.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 
 @Controller('user')
 @UseGuards(AuthGuard('jwt'))
@@ -18,8 +22,22 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post('create')
-  async createUser(@Body() dto: CreateUserRequestDto) {
-    return this.userService.createUser(dto);
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './uploads/profile',
+        filename: (req, file, cb) => {
+          const filename = Date.now() + '-' + file.originalname;
+          cb(null, filename);
+        },
+      }),
+    }),
+  )
+  async createUser(
+    @Body() dto: CreateUserRequestDto,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    return this.userService.createUser({ ...dto, imageUrl: file.path });
   }
 
   @Put('update/:id')
